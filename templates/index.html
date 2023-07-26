@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommend Crops</title>
+</head>
+<body>
+    <form action="#" method="get">
+        <div> Temperature :<input id="temperature" value="{{temperature}}" name="temperature" type="text"></div>
+        <div> Humidity :<input id="humidity" name="humidity" value="{{humidity}}" type="text"></div>
+        <div> Ph :<input id="ph" name="ph" value="{{ph}}" type="text"></div>
+        <div> Rainfall :<input id="rainfall" name="rainfall" value="{{rainfall}}" type="text"></div>
+        <button type="submit">Submit</button>
+    </form>
+    <span>
+        {{predictions}}
+    </span>
+</body>
+</html>
