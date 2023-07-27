@@ -8,7 +8,18 @@ app = Flask(__name__)
 # Load the model from the pickle file
 # with open('model.pkl', 'rb') as file:
 #     model = pickle.load(file)
-model = joblib.load('final_model.joblib')
+file_path = 'labels.txt'
+
+# Open the file in read mode and read the lines into a list
+loaded_labels = []
+with open(file_path, 'r') as file:
+    for line in file:
+        loaded_labels.append(line.strip())  # Strip newline character and add to the list
+
+# loaded_labels now contains the list of labels loaded from the file
+print(loaded_labels)
+
+model = joblib.load('bagging_classifier_model.joblib')
 
 def get_data():
     # Get the input parameters from the GET request
@@ -26,7 +37,7 @@ def predict_crop_api():
         new_predictions = model.predict([[temperature, humidity, ph, rainfall]])
 
         # Return the predictions as a JSON response
-        return jsonify({'predictions': new_predictions.tolist()})
+        return jsonify({'predictions': loaded_labels[new_predictions.tolist()]})
     except Exception as e:
         # Return an error message if something goes wrong
         return jsonify({'error': str(e)})
@@ -39,7 +50,7 @@ def predict_crop():
         new_predictions = model.predict([[temperature, humidity, ph, rainfall]])
 
         # Return the predictions as a JSON response
-        return render_template('index.html', temperature=temperature, humidity=humidity, ph=ph, rainfall=rainfall, predictions=new_predictions)
+        return render_template('index.html', temperature=temperature, humidity=humidity, ph=ph, rainfall=rainfall, predictions=loaded_labels[new_predictions.tolist()[0]])
     except Exception as e:
         # Return an error message if something goes wrong
         return jsonify({'error': str(e)})

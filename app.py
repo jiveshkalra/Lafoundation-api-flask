@@ -19,7 +19,7 @@ def get_data(temperature: float = 0.0, humidity: float = 0.0, ph: float = 0.0, r
     })
     return new_data
 
-@app.get('/api?temperature={temperature}&humidity={humidity}&ph={ph}&rainfall={rainfall}&')
+@app.get('/api?temperature={temperature}&humidity={humidity}&ph={ph}&rainfall={rainfall}')
 def predict_crop_api(temperature: float = 0.0, humidity: float = 0.0, ph: float = 0.0, rainfall: float = 0.0):
     try:
         new_data = get_data(temperature, humidity, ph, rainfall)
@@ -34,6 +34,3 @@ def predict_crop_api(temperature: float = 0.0, humidity: float = 0.0, ph: float 
         raise HTTPException(status_code=500, detail=str(e))
 
 
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
