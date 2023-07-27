@@ -1,13 +1,14 @@
 from fastapi import FastAPI, HTTPException
 import pandas as pd
-import pickle
+import joblib
 
 app = FastAPI()
 
 # Load the model from the pickle file
-with open('model.pkl', 'rb') as file:
-    model = pickle.load(file)
+# with open('model.pkl', 'rb') as file:
+#     model = pickle.load(file)
 
+model = joblib.load('final_model.joblib')
 def get_data(temperature: float = 0.0, humidity: float = 0.0, ph: float = 0.0, rainfall: float = 0.0):
     # Create a DataFrame with the input data
     new_data = pd.DataFrame({
@@ -18,7 +19,7 @@ def get_data(temperature: float = 0.0, humidity: float = 0.0, ph: float = 0.0, r
     })
     return new_data
 
-@app.get('/api')
+@app.get('/api?temperature={temperature}&humidity={humidity}&ph={ph}&rainfall={rainfall}&')
 def predict_crop_api(temperature: float = 0.0, humidity: float = 0.0, ph: float = 0.0, rainfall: float = 0.0):
     try:
         new_data = get_data(temperature, humidity, ph, rainfall)
