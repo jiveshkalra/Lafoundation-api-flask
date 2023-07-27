@@ -1,3 +1,5 @@
+import os
+os.system('pip install scikit-learn')
 from fastapi import FastAPI, HTTPException
 import pandas as pd
 import joblib
