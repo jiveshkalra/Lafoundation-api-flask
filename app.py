@@ -1,5 +1,3 @@
-import os
-os.system('pip install scikit-learn')
 from fastapi import FastAPI, HTTPException
 import pandas as pd
 import joblib
@@ -10,7 +8,7 @@ app = FastAPI()
 # with open('model.pkl', 'rb') as file:
 #     model = pickle.load(file)
 
-model = joblib.load('final_model.joblib')
+model = joblib.load('bagging_classifier_model.joblib')
 def get_data(temperature: float = 0.0, humidity: float = 0.0, ph: float = 0.0, rainfall: float = 0.0):
     # Create a DataFrame with the input data
     new_data = pd.DataFrame({
@@ -34,3 +32,8 @@ def predict_crop_api(temperature: float = 0.0, humidity: float = 0.0, ph: float 
     except Exception as e:
         # Return an error message if something goes wrong
         raise HTTPException(status_code=500, detail=str(e))
+
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
