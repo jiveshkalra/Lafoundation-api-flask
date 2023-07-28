@@ -36,8 +36,12 @@ def predict_crop_api():
         # Make predictions for new data using the loaded model
         new_predictions = model.predict([[temperature, humidity, ph, rainfall]])
 
+        if 9>ph>5:
+            soil_health = 'healthy'
+        else:
+            soil_health = 'unhealthy'
         # Return the predictions as a JSON response
-        return jsonify({'predictions': loaded_labels[new_predictions.tolist()]})
+        return jsonify({loaded_labels[new_predictions.tolist()[0]]:soil_health})
     except Exception as e:
         # Return an error message if something goes wrong
         return jsonify({'error': str(e)})
